@@ -1,6 +1,8 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import Header from "./components/header";
+import Footer from "./components/footer";
+import * as ReactBootstrap from "react-bootstrap";
 
 class Layout extends React.Component {
   render() {
@@ -9,6 +11,7 @@ class Layout extends React.Component {
         <Header />
         <h1>どわーーーー；かなC；</h1>
         <h1>わーー</h1>
+        <Footer />
       </div>
     );
   }
