@@ -10,7 +10,7 @@ export default class Header extends React.Component {
           <Container>
             <div className="navbar-header text-light">
               <NavbarBrand className="text-light">
-                <img src="assets/logo.png" width="70" />
+                <img src="/assets/logo.png" width="70" />
                 <h1>Pastedeck</h1>
               </NavbarBrand>
             </div>
