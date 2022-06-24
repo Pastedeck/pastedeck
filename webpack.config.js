@@ -35,4 +35,7 @@ module.exports = {
       directory: path.join(__dirname, '/public/')
     }
   },
+  resolve: {
+    fallback: { crypto: false }
+  }
 };
