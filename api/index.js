@@ -34,6 +34,10 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "/public/index.html"));
 });
 
+app.get("/client.min.js", (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "/public/client.min.js"));
+})
+
 app.get("/api/v1/paste/:code", (req, res) => {
   if (req.params.code) {
     db.findOne({ code: req.params.code }, (err, doc) => {
