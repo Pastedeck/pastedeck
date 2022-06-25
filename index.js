@@ -16,6 +16,15 @@ mongoose.connect(process.env.MONGODB_URI).then(() => console.log("Connected to M
 
 const db = mongoose.model("pastedeck", schema);
 
+const randomStr = (length) => {
+  const strings = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let str = "";
+  for (let i = 0; i < length; i++) {
+    str += strings[Math.floor(Math.random() * strings.length)];
+  }
+  return str;
+};
+
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -57,8 +66,14 @@ app.route("/api/v1/paste")
       res.status(400).send("BTC address exceeds 60 characters");
       return;
     }
-    const code = crypto.randomBytes(6).toString("base64");
-    const m = new db({ title: req.body.title, body: req.body.content, btc: req.body.btc, code });
+    const cont = JSON.parse(req.body.content);
+    const naiy = {
+      iv: cont.iv,
+      salt: cont.salt,
+      ct: cont.ct,
+    };
+    const code = randomStr(8);
+    const m = new db({ title: req.body.title, body: JSON.stringify(naiy), btc: req.body.btc, code });
     m.save().then(() => {
       res.json({ code });
     });

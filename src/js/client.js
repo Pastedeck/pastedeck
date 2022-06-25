@@ -6,28 +6,24 @@ import Body from "./components/body";
 import PasteBody from "./components/paste-body";
 import * as ReactBootstrap from "react-bootstrap";
 
-class Layout extends React.Component {
-  render() {
-    return (
-      <div className="bg-dark text-light" id="wrapper">
-        <Header />
-        <Body />
-        <Footer />
-      </div>
-    );
-  }
+function Layout() {
+  return (
+    <div className="bg-dark text-light" id="wrapper">
+      <Header />
+      <Body />
+      <Footer />
+    </div>
+  );
 }
 
-class PasteLayout extends React.Component {
-  render() {
-    return (
-      <div className="bg-dark text-light" id="wrapper">
-        <Header />
-        <PasteBody />
-        <Footer />
-      </div>
-    );
-  }
+function PasteLayout() {
+  return (
+    <div className="bg-dark text-light" id="wrapper">
+      <Header />
+      <PasteBody />
+      <Footer />
+    </div>
+  );
 }
 
 if (location.pathname === "/") {
