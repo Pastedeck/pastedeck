@@ -24,7 +24,9 @@ export default function PasteBody() {
 function load() {
   console.log("hello");
   const url = new URL(location.href);
-  const code = url.searchParams.get("code");
+  console.log(url);
+  const key = url.searchParams.get("key");
+  console.log(key);
   if (!code) {
     document.getElementById("pastealert").style.display = "block";
     document.getElementById("pastealert").innerText = "No key specified";

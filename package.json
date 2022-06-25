@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack serve --hot --mode development",
-    "start": "webpack && node index.js"
+    "start": "webpack && node api/index.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/waki285/pastedeck#readme",
   "dependencies": {
+    "@vercel/node": "1.14.1",
     "axios": "^0.27.2",
     "bootstrap": "^5.1.3",
     "crypto-browserify": "^3.12.0",

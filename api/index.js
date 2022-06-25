@@ -4,6 +4,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const crypto = require("crypto");
+const path = require("path");
 
 const schema = new mongoose.Schema({
   title: String,
@@ -25,12 +26,12 @@ const randomStr = (length) => {
   return str;
 };
 
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "..", "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/public/index.html");
+  res.sendFile(path.join(__dirname, "..", "/public/index.html"));
 });
 
 app.route("/api/v1/paste")
@@ -89,7 +90,7 @@ app.get("/paste/:code", (req, res) => {
     if (err) {
       res.status(500).send(err);
     } else if (doc) {
-      res.sendFile(__dirname + "/public/index.html");
+      res.sendFile(path.join(__dirname, "..", "/public/index.html"));
     } else {
       res.status(404).send("Paste not found");
     }
