@@ -100,3 +100,7 @@ body {
 #submittext {
   margin: 8px;
 }
+
+#brandbar:hover {
+  text-decoration: underline;
+}
