@@ -9,8 +9,10 @@ export default function Header() {
         <Container>
           <div className="navbar-header text-light">
             <NavbarBrand className="text-light">
-              <img src="/assets/logo.png" width="70" />
-              <h1>Pastedeck</h1>
+              <a href="/">
+                <img src="/assets/logo.png" width="70" />
+                <h1>Pastedeck</h1>
+              </a>
             </NavbarBrand>
           </div>
         </Container>
