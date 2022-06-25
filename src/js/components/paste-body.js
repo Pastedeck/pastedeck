@@ -26,7 +26,7 @@ function load() {
   console.log("hello");
   const url = new URL(location.href);
   console.log(url);
-  const key = url.searchParams.get("key");
+  const key = url.searchParams.get("key")?.replaceAll(" ", "+")
   console.log(key);
   document.querySelector(".slider").style.display = "none";
   document.querySelector(".sliderspacer").style.display = "block";
