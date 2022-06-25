@@ -1,0 +1,28 @@
+name: Webpack 💫
+
+on: 
+  push:
+    branches:
+      - master
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.PAT }}
+
+      - name: Clean install 🧹
+        run: "yarn install"
+
+      - name: Webpack ✨
+        run: "yarn webpack"
+        
+      - name: Commit changes 📤
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "webpack"

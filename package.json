@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack serve --hot --mode development",
-    "start": "webpack && node api/index.js"
+    "start": "webpack && node api/index.js",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
