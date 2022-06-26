@@ -31,7 +31,9 @@
     "express": "^4.18.1",
     "mongoose": "^6.4.0",
     "react-bootstrap": "^2.4.0",
-    "sjcl": "^1.0.8"
+    "sjcl": "^1.0.8",
+    "sweetalert2": "^11.4.18",
+    "sweetalert2-react-content": "^5.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",

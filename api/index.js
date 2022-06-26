@@ -11,6 +11,7 @@ const schema = new mongoose.Schema({
   body: String,
   btc: String,
   code: String,
+  ownerKey: String,
 });
 
 mongoose.connect(process.env.MONGODB_URI).then(() => console.log("Connected to MongoDB"));
@@ -38,17 +39,18 @@ app.get("/client.min.js", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "/public/client.min.js"));
 })
 
-app.get("/api/v1/paste/:code", (req, res) => {
+app.get("/api/v1/paste/:code", async (req, res) => {
   if (req.params.code) {
-    db.findOne({ code: req.params.code }, (err, doc) => {
-      if (err) {
-        res.status(500).send(err);
-      } else if (doc) {
-        res.json(doc);
-      } else {
-        res.status(404).send("Not found");
-      }
-    });
+    const doc = await db.findOne({ code: req.params.code });
+    if (!doc) return res.status(404).send("Not found");
+    const trueDoc = doc.toObject();
+    if (req.query.owner_key === trueDoc.ownerKey) {
+      delete trueDoc.ownerKey;
+      res.send({ ...trueDoc, isOwner: true });  
+    } else {
+      delete trueDoc.ownerKey;
+      res.send({ ...trueDoc, isOwner: false });
+    }
   } else {
     res.status(400).send("No code specified");
   }
@@ -77,9 +79,10 @@ app.post("/api/v1/paste", (req, res) => {
     ct: cont.ct,
   };
   const code = randomStr(8);
-  const m = new db({ title: req.body.title, body: JSON.stringify(naiy), btc: req.body.btc, code });
+  const ownerKey = crypto.randomBytes(32).toString("hex");
+  const m = new db({ title: req.body.title, body: JSON.stringify(naiy), btc: req.body.btc, code, ownerKey });
   m.save().then(() => {
-    res.json({ code });
+    res.json({ code, ownerKey });
   });
 });
 

@@ -34,6 +34,7 @@ const submit = (e) => {
   axios.post(url, params)
     .then(res => {
       text.innerText = "Success!";
+      localStorage.setItem(res.data.code, res.data.ownerKey);
       location.href = `/paste/${res.data.code}?key=${key}`;
     })
     .catch((err) => {

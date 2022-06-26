@@ -2,7 +2,7 @@ html,
 body,
 #app,
 #wrapper {
-  height: 100%;
+  height: 100% !important;
 }
 
 .footer {
@@ -86,7 +86,7 @@ body,
   transition: all 0.3s ease-in-out 0s;
 }
 body {
-  background: darkgray;
+  background: #212529;
 }
 
 #submitspan {
