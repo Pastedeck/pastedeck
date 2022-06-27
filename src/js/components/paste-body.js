@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import * as ReactBootstrap from "react-bootstrap";
 import { FormGroupTextArea } from "./form-group";
 import Error from "./error";
+import Info from "./info";
 import sjcl from "sjcl";
 import dSwal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -21,6 +22,7 @@ export default function PasteBody() {
     <Container>
       <Slider />
       <Error id="pastealert" />
+      <Info id="pasteinfo" />
       <h2 id="paste-title"></h2>
       <ButtonToolbar className="justify-content-between">
         <ButtonGroup className="mb-2">
@@ -55,6 +57,25 @@ function load(setShowDelete) {
         window.setErrorText("No key specified");
         document.getElementById("body").value = res.data.body;
         return;
+      }
+      if (res.data.expires === 1) {
+        if (res.data.accessCount === 1) {
+          window.showInfo(true);
+          window.setInfoText(
+            <>
+              <b>OK!</b>
+              <p>This paste is Burn after reading. This paste will be destroyed the next time it is accessed.</p>
+            </>
+          );
+        } else if (res.data.accessCount === 2) {
+          window.showInfo(true);
+          window.setInfoText(
+            <>
+              <b>This paste has now been destroyed</b>
+              <p>This paste is Burn after reading. This paste is destroyed.</p>
+            </>
+          );
+        }
       }
       try {
         const decrypted = sjcl.decrypt(key, res.data.body);
