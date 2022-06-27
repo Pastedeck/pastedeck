@@ -3,13 +3,12 @@ import * as ReactBootstrap from "react-bootstrap";
 import Slider from "./slider";
 import { FormGroupText, FormGroupTextArea } from "./form-group";
 
-const { Container, Form, Button } = ReactBootstrap;
+const { Container, Form, Button, InputGroup } = ReactBootstrap;
 import sjcl from "sjcl";
 import axios from "axios";
 
 const submit = (e) => {
   e.preventDefault();
-  console.log("submit");
   document.getElementById("submitbtn").disabled = true;
   document.querySelector(".slider").style.display = "block";
   document.querySelector(".sliderspacer").style.display = "none";
@@ -18,7 +17,7 @@ const submit = (e) => {
   text.innerText = "Generating Key...";
   const content = document.getElementById("body").value;
   const title = document.getElementById("title").value;
-  const btc = document.getElementById("btc").value;
+  const expires = document.getElementById("expires").value;
   const key = makeKey(256);
   text.innerText = "Encoding base64...";
   const junbi = sjcl.codec.utf8String.toBits(content);
@@ -28,7 +27,7 @@ const submit = (e) => {
   text.innerText = "Sending to server...";
   const params = new URLSearchParams();
   if (title) params.append("title", title);
-  if (btc) params.append("btc", btc);
+  if (expires) params.append("expires", expires);
   params.append("content", encrypted);
   const url = `/api/v1/paste`;
   axios.post(url, params)
@@ -65,7 +64,16 @@ export default function Body() {
       <Form onSubmit={submit}>
         <FormGroupTextArea required={true} label="Body text" id="body" value={body} onChange={(e) => setBody(e.target.value)} />
         <FormGroupText label="Title" id="title" />
-        <FormGroupText label="BTC Address" id="btc" />
+        <hr className="my-4" />
+        <InputGroup className="mb-3">
+          <InputGroup.Text>Expires: </InputGroup.Text>
+          <Form.Select id="expires">
+            <option value={1}>Burn after read</option>
+            <option value={2}>One day</option>
+            <option value={3} selected>One Month</option>
+            <option value={0}>Never</option>
+          </Form.Select>
+        </InputGroup>
         <span id="submitspan">
           <Button variant="primary" type="submit" id="submitbtn">Submit</Button>
           <p style={{ display: "none" }} className="text-muted" id="submittext">Submitting...</p>
