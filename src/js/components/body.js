@@ -3,9 +3,14 @@ import * as ReactBootstrap from "react-bootstrap";
 import Slider from "./slider";
 import { FormGroupText, FormGroupTextArea } from "./form-group";
 
-const { Container, Form, Button, InputGroup } = ReactBootstrap;
+const { Container, Form, Button, InputGroup, ButtonGroup } = ReactBootstrap;
 import sjcl from "sjcl";
 import axios from "axios";
+
+import dSwal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+const Swal = withReactContent(dSwal);
 
 const submit = (e) => {
   e.preventDefault();
@@ -56,13 +61,44 @@ const makeKey = (entropy) => {
     .replace(/\//, "-");
 };
 
+function clickUploadButton() {
+  document.getElementById("upload-file").click();
+}
+
+async function fileUpload() {
+  /** @type {File} */
+  const file = document.getElementById("upload-file").files[0];
+  if (file.type.startsWith('image/')) {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      document.getElementById("body").style.display = "none";
+      const img = document.getElementById("preview");
+      img.src = reader.result;
+      img.style.display = "block";
+      Swal.fire({
+        title: <>Uploaded!</>,
+        text: 'Image uploaded!',
+        imageUrl: reader.result,
+      });
+    }
+  }
+}
+
 export default function Body() {
   const [body, setBody] = useState("");
   return (
     <Container>
       <Slider />
+      <ButtonGroup>
+        <Button variant="secondary" onClick={clickUploadButton}>Upload File</Button>
+      </ButtonGroup>
+      <input type={"file"} id="upload-file" style={{ display: "none" }} onChange={fileUpload} />
       <Form onSubmit={submit}>
-        <FormGroupTextArea required={true} label="Body text" id="body" value={body} onChange={(e) => setBody(e.target.value)} />
+        <div id="dataarea">
+          <FormGroupTextArea required={true} label="Body" id="body" value={body} onChange={(e) => setBody(e.target.value)} />
+          <img style={{ display: "none" }} id="preview" />
+        </div>
         <FormGroupText label="Title" id="title" />
         <hr className="my-4" />
         <InputGroup className="mb-3">
