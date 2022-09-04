@@ -62,7 +62,7 @@ export default function Body() {
         <hr className="my-4" />
         <InputGroup className="mb-3">
           <InputGroup.Text>Expires: </InputGroup.Text>
-          <Form.Select id="expires" value={expires} onChange={setExpires}>
+          <Form.Select id="expires" value={expires} onChange={(e) => setExpires(e.target.value)}>
             <option value={1}>Burn after read</option>
             <option value={2}>One day</option>
             <option value={3}>One Month</option>
