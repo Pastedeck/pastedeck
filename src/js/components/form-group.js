@@ -4,11 +4,11 @@ import * as ReactBootstrap from "react-bootstrap";
 
 const { Form } = ReactBootstrap;
 
-const FormGroupText = React.memo(({ mb = "mb-3", label, required = false, id }) => {
+const FormGroupText = React.memo(({ mb = "mb-3", label, required = false, id, value = "", onChange }) => {
   return (
     <Form.Group className={mb}>
       <Form.Label className="text-light">{label} {required ? <Required /> : ""}</Form.Label>
-      <Form.Control required={required} type="text" id={id} />
+      <Form.Control required={required} type="text" id={id} value={value} onChange={onChange} />
     </Form.Group>
   )
 });
